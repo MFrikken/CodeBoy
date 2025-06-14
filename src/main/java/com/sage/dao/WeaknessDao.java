@@ -28,7 +28,7 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
     }
 
     @Override
-    public WeaknessModel receive(Integer key) {
+    public WeaknessModel read(Integer key) {
         try {
             return em.find(WeaknessModel.class, key);
         } catch (Exception e) {

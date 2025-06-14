@@ -15,9 +15,13 @@ public class WeaknessModel {
 
     private Integer vulnerabilityId;
     private String type;
+
+    @Column(name = "name")
     private String name;
+
     @Column(name = "weakness_value")
     private String value;
+
     private String url;
 
     public WeaknessModel() {}

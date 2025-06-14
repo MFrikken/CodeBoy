@@ -1,20 +1,24 @@
 package com.sage;
 
-import java.io.File;
-
+import com.sage.controller.MainController;
+import com.sage.controller.VulnerabilityController;
 import com.sage.controller.WeaknessController;
-import com.sage.model.weakness.WeaknessDto;
-
+import com.sage.utility.FileReaderUtility;
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.application.Application;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
-public class Main extends Application{
+import java.io.File;
+import java.util.logging.Logger;
+
+public class Main extends Application {
+    static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -27,8 +31,16 @@ public class Main extends Application{
         File htmlFile = new File(getClass().getResource("/html/index.html").getFile());
         webEngine.load(htmlFile.toURI().toString());
 
-        JSObject window = (JSObject) webEngine.executeScript("window");
-        window.setMember("javaApp", new JavaBridge());
+        // Wait until WebView is fully loaded before injecting WeaknessController
+        webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
+                JSObject window = (JSObject) webEngine.executeScript("window");
+                window.setMember("mainController", MainController.getInstance());
+                window.setMember("weaknessController", WeaknessController.getInstance());
+                window.setMember("vulnerabilityController", VulnerabilityController.getInstance());
+                window.setMember("fileReader", FileReaderUtility.getInstance());
+            }
+        });
 
         StackPane root = new StackPane(webView);
         Scene scene = new Scene(root, 1500, 900);
@@ -36,15 +48,5 @@ public class Main extends Application{
         stage.setTitle("Sage UI");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/sage-icon.png")));
         stage.show();
-
-        WeaknessDto weakness = new WeaknessDto("semgrep_id", "eslint.detect-eval-with-expression", "eslint.detect-eval-with-expression", "https://semgrep.dev/r/gitlab.eslint.detect-eval-with-expression");
-        if (WeaknessController.getInstance().save(weakness))
-            System.out.println("Fetching...\nFetched" + WeaknessController.getInstance().fetchById("0").toString());
-    }
-
-    class JavaBridge {
-        public void showMessage(String message) {
-            System.out.println("Message from JS: " + message);
-        }
     }
 }

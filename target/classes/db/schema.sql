@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS vulnerabilities(
     id INTEGER NOT NULL,
     category VARCHAR(255),
-    name VARCHAR(255),
+    `name` VARCHAR(255),
     description VARCHAR(255),
     cve VARCHAR(255),
     severity VARCHAR(255),
@@ -13,11 +13,11 @@ CREATE TABLE IF NOT EXISTS vulnerabilities(
 );
 
 CREATE TABLE IF NOT EXISTS weaknesses(
-    id INTEGER NOT NULL;
+    id INTEGER NOT NULL,
     vulnerabilityId INTEGER NOT NULL,
-    type VARCHAR(255),
-    name VARCHAR(255), 
-    value VARCHAR(255),
+    `type` VARCHAR(255),
+    `name` VARCHAR(255),
+    `value` VARCHAR(255),
     url VARCHAR(255),
 
     PRIMARY KEY(id),

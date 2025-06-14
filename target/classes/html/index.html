@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAGE UI</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="script.js"></script>
+    <script defer src="../js/script.js">
+            alert("JS Loaded!"); // This should pop up immediately if JS is loaded
+    </script>
 </head>
 
 <body>
@@ -17,21 +19,25 @@
     </div>
     
     <ul id="list"></ul>
-    <button onclick="buttonClicked()">
+    <button onclick="parseFile()">
         <img src="../icons/add-document.png" />
-        Choose File
+        Select File
     </button>
-    <button class="secondary" onclick="buttonClicked()">Choose File</button>
+
+    <button class="secondary" id="fetchBtn" onclick="fetchWeakness()">Fetch</button>
     <button disabled onclick="buttonClicked()">Choose File</button>
 
-    <ul>
+    <ol id="weaknessList">
         <li>List Item 1</li>
         <li>List Item 2</li>
         <li>List Item 3</li>
         <li>List Item 4</li>
         <li>List Item 5</li>
         <li>List Item 6</li>
-    </ul>
+    </ol>
+
+    <button class="secondary" id="fetchAllVulnBtn" onClick="fetchAllVulnerabilities()">Vulnerabilities</button>
+
 </body>
 
 </html>

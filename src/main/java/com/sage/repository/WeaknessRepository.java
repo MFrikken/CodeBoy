@@ -24,8 +24,13 @@ public class WeaknessRepository implements Repository<WeaknessModel, Integer> {
     }
 
     @Override
+    public void saveAll(List<WeaknessModel> entities) {
+        entities.forEach(this::save);
+    }
+
+    @Override
     public WeaknessModel getByID(Integer key) {
-        return weaknessDao.receive(key);
+        return weaknessDao.read(key);
     }
 
     @Override

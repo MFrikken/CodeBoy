@@ -15,30 +15,35 @@ import com.fasterxml.jackson.databind.ObjectWriter;
  * 
  * @author MFrikken
  */
-public class JsonParser {
+public abstract class JsonParser {
     private static final Logger LOGGER = Logger.getLogger(JsonParser.class.getName());
 
-    private static final JsonParser INSTANCE = new JsonParser();
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static JsonNode jsonFileNode;
+    private static File currentFile;
 
     private JsonParser() {}
-
-    /** 
-     * @return the JsonParser instance
-    */
-    public static JsonParser getInstance() { return INSTANCE; }
 
     /**
      * Parses a given File and caches it as a JsonNode.
      * @param file a pre-read json-file as {@link java.io.File}
      */
-    public static void parseFile(File file) {
+    private static void parseFile(File file) {
+        if (file.equals(currentFile))
+            return;
         try {
             jsonFileNode = objectMapper.readTree(file);
+            currentFile = file;
         } catch (IOException e) {
             LOGGER.severe(String.format("[JsonParser] Failed to parse file (%s) to JsonNode", file.getAbsolutePath()));
         }
+    }
+
+    public static JsonNode asJsonNodeObject(File file) {
+        parseFile(file);
+        if (jsonFileNode != null)
+            return jsonFileNode;
+        throw new RuntimeException(String.format("Given file (%s) could not be parsed to json.", file.getAbsolutePath()));
     }
 
     /**
