@@ -1,4 +1,4 @@
-<img src="src/main/resources/logos/transparent_desktop_icon.png" width="256">
+<img src="src/main/resources/logos/logo_background_white.png" width="256">
 
 # SAST Assessment and Gathering Engine (SAGE)
 
