@@ -46,7 +46,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1500, 900);
         stage.setScene(scene);
         stage.setTitle("Sage UI");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/sage-icon.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/logos/taskbar_icon.png")));
         stage.show();
     }
 }

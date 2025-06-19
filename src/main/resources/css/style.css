@@ -8,104 +8,124 @@
 
 :root {
     /** Base colors */
---clr-dark-a0: #000000;
---clr-light-a0: #ffffff;
+    --clr-dark: #000000;
+    --clr-light: #ffffff;
 
-/** Dark theme primary colors */
---clr-primary-a0: #ffb22c;
---clr-primary-a10: #ffba49;
---clr-primary-a20: #ffc362;
---clr-primary-a30: #ffcb79;
---clr-primary-a40: #ffd490;
---clr-primary-a50: #ffdca6;
+    /** Primary colors (Green tones) */
+    --clr-primary-0: #657B58;
+    --clr-primary-10: #7A8E6A;
+    --clr-primary-20: #8FA17D;
+    --clr-primary-30: #A3B38F;
+    --clr-primary-40: #B8C6A2;
+    --clr-primary-50: #CDDBB5;
 
-/** Dark theme surface colors */
---clr-surface-a0: #121212;
---clr-surface-a10: #282828;
---clr-surface-a20: #3f3f3f;
---clr-surface-a30: #575757;
---clr-surface-a40: #717171;
---clr-surface-a50: #8b8b8b;
+    /** Light mode */
 
-/** Dark theme tonal surface colors */
---clr-surface-tonal-a0: #272017;
---clr-surface-tonal-a10: #3c352c;
---clr-surface-tonal-a20: #514b43;
---clr-surface-tonal-a30: #68625b;
---clr-surface-tonal-a40: #7f7a74;
---clr-surface-tonal-a50: #98938e;           
+    /** Surface colors */
+    --clr-surface-0: #FAF7F0;
+    --clr-surface-10: #F0ECE4;
+    --clr-surface-20: #E5E1D9;
+    --clr-surface-30: #DBD6CE;
+    --clr-surface-40: #D0CCC4;
+    --clr-surface-50: #C6C2BA;
+
+    /** Tonal surface colors */
+    --clr-surface-tonal-0: #E6EFE3;
+    --clr-surface-tonal-10: #D9E2D7;
+    --clr-surface-tonal-20: #CDD6CB;
+    --clr-surface-tonal-30: #C1CABF;
+    --clr-surface-tonal-40: #B5BEB4;
+    --clr-surface-tonal-50: #A9B2A9;
+
+    /** Dark mode */
+
+    /** Surface colors */
+    --clr-surface-0-dark: #121212;
+    --clr-surface-10-dark: #282828;
+    --clr-surface-20-dark: #3f3f3f;
+    --clr-surface-30-dark: #575757;
+    --clr-surface-40-dark: #717171;
+    --clr-surface-50-dark: #8b8b8b;
+
+    /** Tonal surface colors */
+    --clr-surface-tonal-0-dark: #1B201A;
+    --clr-surface-tonal-10-dark: #2F342D;
+    --clr-surface-tonal-20-dark: #444941;
+    --clr-surface-tonal-30-dark: #5B6057;
+    --clr-surface-tonal-40-dark: #72766D;
+    --clr-surface-tonal-50-dark: #8A8E84;
 }
 
 * {
     font-family: "Inter", Arial, sans-serif;
-    color: var(--clr-light-a0);
+    color: var(--clr-dark);
 }
 
 body {
-    background-color: var(--clr-surface-a0);
+    background-color: var(--clr-light);
 }
 
 ul {
-    list-style-type: none;             
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 li {
-    padding: 10px 20px;                
-    font-size: 16px;                  
-    color: var(--clr-light-a0);           
-    background-color: var(--clr-surface-a0); 
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--clr-dark);
+    background-color: var(--clr-surface-0);
 }
 
 li:nth-child(even) {
-    background-color: var(--clr-surface-a10); 
+    background-color: var(--clr-light);
 }
 
 li:nth-child(odd) {
-    background-color: var(--clr-surface-a0); 
+    background-color: var(--clr-surface-0);
 }
 
 button {
-    padding: 12px 20px;        
+    padding: 12px 20px;
     display: flex;
     align-items: center;
-    gap: 10px;       
-    font-size: 15px;                  
-    font-weight: 900;                 
-    border: 2px solid var(--clr-primary-a20);                    
-    border-radius: 8px;     
-    color: var(--clr-dark-a0);         
-    background-color: var(--clr-primary-a20); 
-    cursor: pointer;                 
-    text-align: center;              
-    outline: none;                   
-    transition: all 0.05s ease;        
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 900;
+    border: 2px solid var(--clr-primary-20);
+    border-radius: 8px;
+    color: var(--clr-surface-0);
+    background-color: var(--clr-primary-20);
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    transition: all 0.05s ease;
 }
 
 button:hover {
-    background-color: var(--clr-primary-a10); 
-    border-color: var(--clr-primary-a10);
+    background-color: var(--clr-primary-10);
+    border-color: var(--clr-primary-10);
 }
 
 button.secondary {
-    background-color: var(--clr-surface-a0);
-    color: var(--clr-primary-a20);                 
-    border: 2px solid var(--clr-primary-a20);
+    background-color: var(--clr-surface-0);
+    color: var(--clr-primary-20);
+    border: 2px solid var(--clr-primary-20);
 }
 
 button.secondary:hover {
-    background-color: var(--clr-primary-a10); 
-    border-color: var(--clr-primary-a10);
-    color: var(--clr-dark-a0);                               
+    background-color: var(--clr-primary-10);
+    border-color: var(--clr-primary-10);
+    color: var(--clr-light);
 }
 
 button:disabled {
-    background-color: transparent;    
-    border: 2px solid var(--clr-surface-a50);
-    color: var(--clr-surface-a50);              
-    cursor: not-allowed;                        
-    box-shadow: none;                             
+    background-color: transparent;
+    border: 2px solid var(--clr-surface-50);
+    color: var(--clr-surface-50);
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
 .header {
@@ -118,11 +138,11 @@ button:disabled {
 }
 
 .title-sage {
-    color: var(--clr-primary-a30);
+    color: var(--clr-primary-30);
     font-size: 20px;
 }
 
 .title-page {
-    color: var(--clr-light-a0);
+    color: var(--clr-dark);
     font-size: 40px;
 }

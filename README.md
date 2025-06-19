@@ -1,4 +1,4 @@
-<img src="img/SAGE_logo.png" width="128">
+<img src="src/main/resources/logos/transparent_desktop_icon.png" width="256">
 
 # SAST Assessment and Gathering Engine (SAGE)
 
@@ -49,4 +49,4 @@ To contribute:
 This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
 
 ## Powered by
-<img src="img/IWT_Machines_logo.png" width="128">
+<img src="src/main/resources/logos/IWT_Machines_logo.png" width="128">
