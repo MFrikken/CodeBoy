@@ -1,9 +1,10 @@
 package com.sage;
 
-import com.sage.controller.MainController;
+import com.sage.controller.FileController;
 import com.sage.controller.VulnerabilityController;
 import com.sage.controller.WeaknessController;
 import com.sage.utility.FileReaderUtility;
+import com.sage.utility.JSConsoleBridge;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -24,21 +25,34 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
+        webEngine.setOnError(event -> LOGGER.warning("[Frontend] An error occured on the frontend: " + event.getMessage()));
+
         File htmlFile = new File(getClass().getResource("/html/index.html").getFile());
         webEngine.load(htmlFile.toURI().toString());
+        webEngine.setJavaScriptEnabled(true);
 
         // Wait until WebView is fully loaded before injecting WeaknessController
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
                 JSObject window = (JSObject) webEngine.executeScript("window");
-                window.setMember("mainController", MainController.getInstance());
+                window.setMember("fileController", FileController.getInstance());
                 window.setMember("weaknessController", WeaknessController.getInstance());
                 window.setMember("vulnerabilityController", VulnerabilityController.getInstance());
                 window.setMember("fileReader", FileReaderUtility.getInstance());
+                window.setMember("javaConsole", new JSConsoleBridge());
+
+                webEngine.executeScript("""
+                            console.log = function(msg) {
+                                javaConsole.log(msg);
+                            };
+                            console.error = function(msg) {
+                                javaConsole.error(msg);
+                            };
+                        """);
             }
         });
 

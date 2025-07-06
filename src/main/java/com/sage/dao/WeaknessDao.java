@@ -2,10 +2,21 @@ package com.sage.dao;
 
 import com.sage.model.weakness.WeaknessModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WeaknessDao extends Dao<WeaknessModel, Integer> {
 
-    public WeaknessDao() {
+    private static WeaknessDao instance;
+
+    private WeaknessDao() {
         super();
+    }
+
+    public static WeaknessDao getInstance() {
+        if (instance == null)
+            instance = new WeaknessDao();
+        return instance;
     }
 
     @Override
@@ -14,15 +25,13 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
             tx.begin();
             em.persist(entity);
             tx.commit();
-
             return true;
         } catch (Exception e) {
             if (tx.isActive())
                 tx.rollback();
-            
+
             LOGGER.severe(
                     "[WeaknessDao] Error while trying to persist entity: " + entity.toString() + "\nRolling back: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -30,7 +39,10 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
     @Override
     public WeaknessModel read(Integer key) {
         try {
-            return em.find(WeaknessModel.class, key);
+            tx.begin();
+            WeaknessModel weaknessModel = em.find(WeaknessModel.class, key);
+            tx.commit();
+            return weaknessModel;
         } catch (Exception e) {
             LOGGER.severe("[WeaknessDao] Error while trying to fetch entity with (id)=" + key);
             return null;
@@ -49,4 +61,44 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
+    public List<WeaknessModel> readAll() {
+        String query = "SELECT * FROM weaknesses;";
+
+        List<Object[]> results = em.createQuery(query).getResultList();
+        List<WeaknessModel> weaknessModels = new ArrayList<>();
+
+        for (Object[] row : results) {
+            WeaknessModel weaknessModel = new WeaknessModel(
+                    ((Number) row[0]).intValue(),
+                    ((Number) row[1]).intValue(),
+                    (String) row[2],
+                    (String) row[3],
+                    (String) row[4],
+                    (String) row[5]
+            );
+            weaknessModels.add(weaknessModel);
+        }
+
+        return weaknessModels;
+    }
+
+    public List<WeaknessModel> fetchAllByVulnerabilityId(Integer vulnerabilityId) {
+        String query = "SELECT * FROM weaknesses WHERE vulnerability_id = " + vulnerabilityId + ";";
+
+        List<Object[]> results = em.createQuery(query).getResultList();
+        List<WeaknessModel> weaknessModels = new ArrayList<>();
+
+        for (Object[] row : results) {
+            WeaknessModel weaknessModel = new WeaknessModel(
+                    ((Number) row[0]).intValue(),
+                    ((Number) row[1]).intValue(),
+                    (String) row[2],
+                    (String) row[3],
+                    (String) row[4],
+                    (String) row[5]
+            );
+            weaknessModels.add(weaknessModel);
+        }
+        return weaknessModels;
+    }
 }

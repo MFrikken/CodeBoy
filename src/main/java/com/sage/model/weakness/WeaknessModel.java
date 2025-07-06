@@ -1,5 +1,6 @@
 package com.sage.model.weakness;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sage.utility.JsonParser;
 
 import jakarta.persistence.Column;
@@ -26,6 +27,11 @@ public class WeaknessModel {
 
     public WeaknessModel() {}
 
+    public WeaknessModel(Integer id, Integer vulnerabilityId) {
+        this.id = id;
+        this.vulnerabilityId = vulnerabilityId;
+    }
+
     public WeaknessModel(Integer id, Integer vulnerabilityId, String type, String name, String value, String url) {
         this. id = id;
         this.vulnerabilityId = vulnerabilityId;
@@ -44,6 +50,15 @@ public class WeaknessModel {
 
     public WeaknessDto toWeaknessDto() {
         return new WeaknessDto(type, name, value, url);
+    }
+
+    public static WeaknessModel fromJsonNode(Integer id, Integer vulnerabilityId, JsonNode jsonNode) {
+        WeaknessModel model = new WeaknessModel(id, vulnerabilityId);
+        model.type = jsonNode.get("type").asText();
+        model.name = jsonNode.get("name").asText();
+        model.value = jsonNode.get("value").asText();
+        model.url = jsonNode.get("url").asText();
+        return model;
     }
 
     @Override

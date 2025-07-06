@@ -1,4 +1,34 @@
+function processFile() {
+    let filePath = window.fileReader.getFilePath();
+    console.log("Processing file called");
+
+    if (filePath) {
+        const result = JSON.parse(window.fileController.process(filePath));
+        console.log(result)
+        displayStatistics(result);
+    } else {
+        console.log(filePath);
+    }
+}
+
+function displayStatistics(statistics) {
+    console.log(statistics);
+    let statisticsList = document.getElementById("statistics");
+    statisticsList.innerHTML = "";
+    statistics.forEach(severity => {
+        let li = document.createElement("li");
+        li.textContent = `${severity.key} ${severity.value}`
+        statisticsList.appendChild(li);
+    });
+}
+
+function fetchAllVulnerabilities() {
+    const vulnerabilities = JSON.parse(window.fileController.fetchAllVulnerabilities());
+    updateList(vulnerabilities);
+}
+
 function updateList(entities) {
+    console.log(entities);
     let entityList = document.getElementById("list");
     entityList.innerHTML = "";
     entities.forEach(entity => {
@@ -8,30 +38,8 @@ function updateList(entities) {
     });
 }
 
-function fetchWeakness() {
-    const result = window.mainController.process("C:/Users/lenovo/IdeaProjects/SAGE_Java/gl-sast-report.json");
+function fetchWeakness(id) {
     let list = document.getElementById("weaknessList");
 
-    let weaknesses = [];
-    weaknesses.push(JSON.parse(window.weaknessController.fetchById("0")));
-
-    weaknesses.forEach(weakness => {
-        let li = document.createElement("li");
-        li.textContent = `Type: ${weakness.type}, Name: ${weakness.name}, Value: ${weakness.value}, URL: ${weakness.url}`;
-        list.appendChild(li);
-    });
-}
-
-function parseFile() {
-    let filePath = window.fileReader.getFilePath();
-
-    if (filePath) {
-        const result = window.mainController.process(filePath);
-    } else {
-        // display failed status
-    }
-}
-
-function fetchAllVulnerabilities() {
-    window.mainController.fetchAllVulnerabilities();
+    const weakness = JSON.parse(window.weaknessController.fetchById(id));
 }

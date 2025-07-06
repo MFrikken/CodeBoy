@@ -9,7 +9,11 @@ public class WeaknessRepository implements Repository<WeaknessModel, Integer> {
     private final WeaknessDao weaknessDao;
 
     public WeaknessRepository() {
-        weaknessDao = new WeaknessDao();
+        weaknessDao = WeaknessDao.getInstance();
+    }
+
+    public List<WeaknessModel> getAllByVulnerabilityId(Integer vulnerabilityId) {
+        return this.weaknessDao.fetchAllByVulnerabilityId(vulnerabilityId);
     }
 
     @Override
@@ -47,8 +51,7 @@ public class WeaknessRepository implements Repository<WeaknessModel, Integer> {
 
     @Override
     public List<WeaknessModel> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return weaknessDao.readAll();
     }
-    
+
 }
