@@ -3,6 +3,7 @@ package com.sage.service;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.sage.model.vulnerability.VulnerabilityModel;
 import com.sage.model.weakness.WeaknessDto;
 import com.sage.model.weakness.WeaknessModel;
 import com.sage.repository.WeaknessRepository;
@@ -27,9 +28,10 @@ public class WeaknessService {
         LOGGER.info("[WeaknessService] No entity found by (id)=" + id);
         return null;
     }
-    
+
+
     public boolean save(WeaknessDto weaknessDto) {
-        WeaknessModel model = weaknessDto.toModel(0, 2);
+        WeaknessModel model = weaknessDto.toModel(new VulnerabilityModel());
         return weaknessRepository.save(model);
     }
 }

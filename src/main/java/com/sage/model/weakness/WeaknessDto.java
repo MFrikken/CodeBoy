@@ -2,6 +2,7 @@ package com.sage.model.weakness;
 
 import java.io.Serializable;
 
+import com.sage.model.vulnerability.VulnerabilityModel;
 import com.sage.utility.JsonParser;
 
 /**
@@ -42,8 +43,8 @@ public class WeaknessDto {
       return url;
    }
 
-   public WeaknessModel toModel(Integer id, Integer vulnerabilityId) {
-      return new WeaknessModel(id, vulnerabilityId, type, name, value, url);
+   public WeaknessModel toModel(VulnerabilityModel vulnerabilityModel) {
+      return new WeaknessModel(vulnerabilityModel, type, name, value, url);
    }
 
    @Override

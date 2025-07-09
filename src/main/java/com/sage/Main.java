@@ -30,7 +30,6 @@ public class Main extends Application {
         WebEngine webEngine = webView.getEngine();
 
         webEngine.setOnError(event -> LOGGER.warning("[Frontend] An error occured on the frontend: " + event.getMessage()));
-
         File htmlFile = new File(getClass().getResource("/html/index.html").getFile());
         webEngine.load(htmlFile.toURI().toString());
         webEngine.setJavaScriptEnabled(true);
@@ -43,8 +42,9 @@ public class Main extends Application {
                 window.setMember("weaknessController", WeaknessController.getInstance());
                 window.setMember("vulnerabilityController", VulnerabilityController.getInstance());
                 window.setMember("fileReader", FileReaderUtility.getInstance());
-                window.setMember("javaConsole", new JSConsoleBridge());
 
+                // TODO: remove later - just for debugging purposes
+                window.setMember("javaConsole", new JSConsoleBridge());
                 webEngine.executeScript("""
                             console.log = function(msg) {
                                 javaConsole.log(msg);

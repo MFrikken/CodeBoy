@@ -9,14 +9,6 @@ import jakarta.persistence.EntityTransaction;
 abstract class Dao<T, K> {
     protected static final Logger LOGGER = Logger.getLogger(Dao.class.getName());
 
-    protected EntityManager em;
-    protected EntityTransaction tx;
-
-    protected Dao() {
-        em = JPAManager.getEntityManager();
-        tx = em.getTransaction();
-    }
-
     abstract boolean create(T entity);
 
     abstract T read(K key);

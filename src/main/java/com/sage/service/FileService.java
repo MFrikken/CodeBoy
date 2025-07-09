@@ -18,7 +18,6 @@ public class FileService {
     private static final Logger LOGGER = Logger.getLogger(FileService.class.getName());
 
     private VulnerabilityRepository vulnerabilityRepository = new VulnerabilityRepository();
-    private WeaknessRepository weaknessRepository = new WeaknessRepository();
 
     public boolean processFile(String filePath) {
         File file;
@@ -27,8 +26,19 @@ public class FileService {
 
             if (file != null) {
                 JsonNode fileTree = JsonParser.asJsonNodeObject(file);
-                this.processVulnerabilities(fileTree);
-                this.processWeaknesses(fileTree);
+
+                ArrayList<VulnerabilityModel> vulnerabilityModelList = new ArrayList<>();
+                for (JsonNode vulnerabilityJson : fileTree.get("vulnerabilities")) {
+                    VulnerabilityModel vulnerabilityModel = VulnerabilityModel.fromJsonNode(vulnerabilityJson);
+
+                    ArrayList<WeaknessModel> weaknessModelList = this.extractWeaknesses(vulnerabilityJson, vulnerabilityModel);
+
+                    vulnerabilityModel.setWeaknesses(weaknessModelList);
+                    vulnerabilityModelList.add(vulnerabilityModel);
+                }
+
+                this.vulnerabilityRepository.saveAll(vulnerabilityModelList);
+
                 return true;
             }
             return false;
@@ -38,30 +48,19 @@ public class FileService {
         }
     }
 
-    private void processVulnerabilities(JsonNode fileTree) {
-        JsonNode vulnerabilitiesJson = fileTree.get("vulnerabilities");
-        int id = 1;
-        List<VulnerabilityModel> vulnerabilityModelList = new ArrayList<>();
-        for (JsonNode vuln : vulnerabilitiesJson) {
-            vulnerabilityModelList.add(VulnerabilityModel.fromJsonNode(id, vuln));
-            id++;
-        }
-        this.vulnerabilityRepository.saveAll(vulnerabilityModelList);
-    }
-
-    private void processWeaknesses(JsonNode fileTree) {
-        JsonNode vulnerabilitiesJson = fileTree.get("vulnerabilities");
-        List<WeaknessModel> weaknessModelList = new ArrayList<>();
-        Integer vulnId = 1;
-        for (JsonNode vuln : vulnerabilitiesJson) {
-            JsonNode weaknessesJson = vuln.get("identifiers");
-            Integer id = 1;
-            for (JsonNode weakn : weaknessesJson) {
-                weaknessModelList.add(WeaknessModel.fromJsonNode(id, vulnId, weakn));
-                id++;
+    private ArrayList<WeaknessModel> extractWeaknesses(JsonNode vulnerabilityJson, VulnerabilityModel vulnerabilityModel) {
+        ArrayList<WeaknessModel> weaknessModelList = new ArrayList<>();
+        try {
+            for (JsonNode weaknessVulnerability : vulnerabilityJson.get("identifiers")) {
+                if (weaknessVulnerability == null) { continue; }
+                WeaknessModel weaknessModel = WeaknessModel.fromJsonNode(vulnerabilityModel, weaknessVulnerability);
+                weaknessModelList.add(weaknessModel);
             }
-            vulnId++;
+        } catch (Exception e) {
+            LOGGER.severe("[FileService] Failed to extract weaknesses: " + e.getMessage());
+            throw e;
         }
-        this.weaknessRepository.saveAll(weaknessModelList);
+        return weaknessModelList;
+
     }
 }

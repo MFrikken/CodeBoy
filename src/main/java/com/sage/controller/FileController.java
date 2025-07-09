@@ -1,6 +1,7 @@
 package com.sage.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.sage.service.FileService;
@@ -26,13 +27,18 @@ public class FileController {
     }
 
     public String process(String filePath) {
-        if (fileService.processFile(filePath))
+        if (fileService.processFile(filePath)) {
             return JsonParser.asJsonString(vulnerabilityService.getStatistics());
+        }
         LOGGER.severe(String.format("[FileController] Failed to process SAST-Report-File: %s", filePath));
         throw new InternalError("File: " + filePath + " could not be processed\n");
     }
 
     public void fetchAllVulnerabilities() {
         vulnerabilityService.getAll();
+    }
+
+    public String info() {
+        return "FileController instance: " + getInstance() + "\nClass: " + FileController.class.getName();
     }
 }

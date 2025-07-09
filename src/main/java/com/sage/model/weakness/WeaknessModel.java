@@ -1,20 +1,22 @@
 package com.sage.model.weakness;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sage.model.vulnerability.VulnerabilityModel;
 import com.sage.utility.JsonParser;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "weaknesses")
 public class WeaknessModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer vulnerabilityId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vulnerability_id", nullable = false)
+    private VulnerabilityModel vulnerability;
+
     private String type;
 
     @Column(name = "name")
@@ -27,14 +29,12 @@ public class WeaknessModel {
 
     public WeaknessModel() {}
 
-    public WeaknessModel(Integer id, Integer vulnerabilityId) {
-        this.id = id;
-        this.vulnerabilityId = vulnerabilityId;
+    public WeaknessModel(VulnerabilityModel vulnerability) {
+        this.vulnerability = vulnerability;
     }
 
-    public WeaknessModel(Integer id, Integer vulnerabilityId, String type, String name, String value, String url) {
-        this. id = id;
-        this.vulnerabilityId = vulnerabilityId;
+    public WeaknessModel(VulnerabilityModel vulnerability, String type, String name, String value, String url) {
+        this.vulnerability = vulnerability;
         this.type = type;
         this.name = name; 
         this.value = value; 
@@ -42,7 +42,7 @@ public class WeaknessModel {
     }
 
     public Integer getId() { return id; }
-    public Integer getVulnerabilityId() { return vulnerabilityId; }
+    public VulnerabilityModel getVulnerability() { return vulnerability; }
     public String getType() { return type; }
     public String getName() { return name; }
     public String getValue() { return value; }
@@ -52,12 +52,12 @@ public class WeaknessModel {
         return new WeaknessDto(type, name, value, url);
     }
 
-    public static WeaknessModel fromJsonNode(Integer id, Integer vulnerabilityId, JsonNode jsonNode) {
-        WeaknessModel model = new WeaknessModel(id, vulnerabilityId);
+    public static WeaknessModel fromJsonNode(VulnerabilityModel vulnerability, JsonNode jsonNode) {
+        WeaknessModel model = new WeaknessModel(vulnerability);
         model.type = jsonNode.get("type").asText();
         model.name = jsonNode.get("name").asText();
         model.value = jsonNode.get("value").asText();
-        model.url = jsonNode.get("url").asText();
+        model.url = jsonNode.has("url") && !jsonNode.get("url").isNull() ? jsonNode.get("url").asText() : null;
         return model;
     }
 
@@ -81,7 +81,7 @@ public class WeaknessModel {
     @Override 
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + vulnerabilityId.hashCode();
+        result = 31 * result + vulnerability.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + value.hashCode();

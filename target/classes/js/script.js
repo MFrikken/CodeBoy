@@ -1,24 +1,29 @@
-function processFile() {
+function handleFileProcessing() {
+    if (!window.fileController || !window.fileReader) {
+        console.error("Java Bridge not ready yet.");
+    }
     let filePath = window.fileReader.getFilePath();
-    console.log("Processing file called");
+    if (!filePath) return;
 
-
-    if (filePath) {
-        const result = JSON.parse(window.fileController.process(filePath));
-        console.log(result)
+    try {
+        const result = processFile(filePath);
         displayStatistics(result);
-    } else {
-        console.log(filePath);
+    } catch (error) {
+        console.error(error);
     }
 }
 
+function processFile(filePath) {
+    const result = window.fileController.process(filePath);
+    return JSON.parse(result);
+}
+
 function displayStatistics(statistics) {
-    console.log(statistics);
     let statisticsList = document.getElementById("statistics");
     statisticsList.innerHTML = "";
-    statistics.forEach(severity => {
+    Object.entries(statistics).forEach(([key, value]) => {
         let li = document.createElement("li");
-        li.textContent = `${severity.key} ${severity.value}`
+        li.textContent = `${key}: ${value}`
         statisticsList.appendChild(li);
     });
 }
@@ -41,6 +46,6 @@ function updateList(entities) {
 
 function fetchWeakness(id) {
     let list = document.getElementById("weaknessList");
-
     const weakness = JSON.parse(window.weaknessController.fetchById(id));
+    // TODO: implement
 }

@@ -1,6 +1,10 @@
 package com.sage.dao;
 
+import com.sage.model.vulnerability.VulnerabilityModel;
 import com.sage.model.weakness.WeaknessModel;
+import com.sage.utility.JPAManager;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,31 +25,41 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
 
     @Override
     public boolean create(WeaknessModel entity) {
+        EntityManager entityManager = JPAManager.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
         try {
-            tx.begin();
-            em.persist(entity);
-            tx.commit();
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
             return true;
         } catch (Exception e) {
-            if (tx.isActive())
-                tx.rollback();
+            if (transaction.isActive())
+                transaction.rollback();
 
             LOGGER.severe(
                     "[WeaknessDao] Error while trying to persist entity: " + entity.toString() + "\nRolling back: " + e.getMessage());
             return false;
+        } finally {
+            entityManager.close();
         }
     }
 
     @Override
     public WeaknessModel read(Integer key) {
+        EntityManager entityManager = JPAManager.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
         try {
-            tx.begin();
-            WeaknessModel weaknessModel = em.find(WeaknessModel.class, key);
-            tx.commit();
+            transaction.begin();
+            WeaknessModel weaknessModel = entityManager.find(WeaknessModel.class, key);
+            transaction.commit();
             return weaknessModel;
         } catch (Exception e) {
             LOGGER.severe("[WeaknessDao] Error while trying to fetch entity with (id)=" + key);
             return null;
+        } finally {
+            entityManager.close();
         }
     }
 
@@ -62,43 +76,37 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
     }
 
     public List<WeaknessModel> readAll() {
-        String query = "SELECT * FROM weaknesses;";
+        EntityManager entityManager = JPAManager.getEntityManager();
 
-        List<Object[]> results = em.createQuery(query).getResultList();
-        List<WeaknessModel> weaknessModels = new ArrayList<>();
+        String query = "SELECT w FROM WeaknessModel w";
 
-        for (Object[] row : results) {
-            WeaknessModel weaknessModel = new WeaknessModel(
-                    ((Number) row[0]).intValue(),
-                    ((Number) row[1]).intValue(),
-                    (String) row[2],
-                    (String) row[3],
-                    (String) row[4],
-                    (String) row[5]
-            );
-            weaknessModels.add(weaknessModel);
+        try {
+            List<WeaknessModel> weaknessModels = entityManager.createQuery(query, WeaknessModel.class).getResultList();
+            return weaknessModels;
+        } catch (Exception e) {
+            LOGGER.warning("An error occured while trying to fetch all weaknesses: " + e.getMessage());
+            return new ArrayList<>();
+        } finally {
+            entityManager.close();
         }
 
-        return weaknessModels;
     }
 
     public List<WeaknessModel> fetchAllByVulnerabilityId(Integer vulnerabilityId) {
-        String query = "SELECT * FROM weaknesses WHERE vulnerability_id = " + vulnerabilityId + ";";
+        EntityManager entityManager = JPAManager.getEntityManager();
 
-        List<Object[]> results = em.createQuery(query).getResultList();
-        List<WeaknessModel> weaknessModels = new ArrayList<>();
+        String query = "SELECT w FROM WeaknessModel WHERE w.vulnerability_id = :vulnerabilityId";
 
-        for (Object[] row : results) {
-            WeaknessModel weaknessModel = new WeaknessModel(
-                    ((Number) row[0]).intValue(),
-                    ((Number) row[1]).intValue(),
-                    (String) row[2],
-                    (String) row[3],
-                    (String) row[4],
-                    (String) row[5]
-            );
-            weaknessModels.add(weaknessModel);
+        try {
+            List<WeaknessModel> weaknessModels = entityManager.createQuery(query, WeaknessModel.class)
+                    .setParameter("vulnerabilityId", vulnerabilityId)
+                    .getResultList();
+            return weaknessModels;
+        } catch (Exception e) {
+            LOGGER.warning("An error occured while trying to fetch weaknesses: " + e.getMessage());
+            return new ArrayList<>();
+        } finally {
+            entityManager.close();
         }
-        return weaknessModels;
     }
 }
