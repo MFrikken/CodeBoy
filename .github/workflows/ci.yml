@@ -1,4 +1,4 @@
-name: Maven Test & Build
+name: Maven Build
 on:
   push:
 
@@ -15,9 +15,6 @@ jobs:
         distribution: adopt
         java-version: 21
         cache: maven
-
-    - name: Run tests
-      run: mvn test
 
     - name: Build
       run: mvn -B package --file pom.xml
