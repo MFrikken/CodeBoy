@@ -6,7 +6,7 @@
 
     <!-- Run with `mvn javafx:run` -->
 
-    <groupId>com.sage</groupId>
+    <groupId>com.codeboy</groupId>
     <artifactId>java-fork</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -84,7 +84,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.sage.Main</mainClass>
+                    <mainClass>com.codeboy.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

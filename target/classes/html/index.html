@@ -2,41 +2,111 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SAGE UI</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css"/>
     <script src="../js/script.js" defer></script>
 </head>
 
 <body>
+<header class="header">
+    <h1 class="title-codeboy">CodeBoy</h1>
+    <p class="sast-description">
+        Static Application Security Testing provides insights into your software's vulnerabilities and weaknesses.
+    </p>
+</header>
 
-<div class="header">
-    <div class="title-sage">SAGE</div>
-    <div class="title-page">Dashboard</div>
-</div>
+<section class="dashboard-logo">
+    <img src="../logos/macbook_dock_icon_1024x1024.png" width="256" alt="SAGE UI logo"/>
+</section>
 
-<ol id="statistics"></ol>
+<section class="dashboard-start-scan">
+    <h2 class="dashboard-prompt">Analyze your SAST scans now!</h2>
+    <button onclick="handleFileProcessing()">
+        <img src="../icons/add-document.png" alt="Add Document Icon"/>
+        Select File
+    </button>
+</section>
 
-<button onclick="handleFileProcessing()">
-    <img src="../icons/add-document.png"/>
-    Select File
+<section class="dashboard-guides">
+    <p class="prompt">No scans yet? Explore some guides</p>
+    <h2 class="headline">Guides</h2>
+    <div class="guides">
+        <div class="guide">
+            <div class="guide-logo">
+                <img src="../logos/guides/gitlab-logo.png" alt="GitLab logo" width="100px"/>
+                <a href="https://about.gitlab.com/" target="_blank" rel="noopener noreferrer" class="guide-link">
+                    <img src="../icons/external-link.png" alt="Open link icon"/>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide">
+            <div class="guide-logo">
+                <img src="../logos/guides/github-logo.jpg" alt="GitHub logo" width="100px"/>
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="guide-link">
+                    <img src="../icons/external-link.png" alt="Open link icon"/>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide">
+            <div class="guide-logo">
+                <img src="../logos/guides/snyk-logo.jpg" alt="Snyk logo" width="100px"/>
+                <a href="https://snyk.io/" target="_blank" rel="noopener noreferrer" class="guide-link">
+                    <img src="../icons/external-link.png" alt="Open link icon"/>
+                </a>
+            </div>
+        </div>
+
+        <div class="guide">
+            <div class="guide-logo">
+                <img src="../logos/guides/semgrep-logo.jpg" alt="Semgrep logo" width="100px"/>
+                <a href="https://semgrep.dev/" target="_blank" rel="noopener noreferrer" class="guide-link">
+                    <img src="../icons/external-link.png" alt="Open link icon"/>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<aside id="sidebar" class="sidebar">
+    <div class="sidebar-content">
+        <div class="sidebar-top">
+            <h3>Recent Activity</h3>
+            <ul id="recent-files" class="recent-files"></ul>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch" onchange="toggleTheme()"/>
+                    <span class="slider"></span>
+                </label>
+                <span class="theme-label">Dark Mode</span>
+            </div>
+
+            <a href="#" class="sidebar-link">❓ Help</a>
+            <hr class="sidebar-separator"/>
+            <div class="copyright">© 2025 MFrikken</div>
+        </div>
+    </div>
+</aside>
+
+<button id="sidebar-show-button" class="sidebar-show" onclick="toggleSidebar()" hidden>
+    <img src="../icons/sidebar.png" alt="Toggle Sidebar Icon" width="24"/>
 </button>
 
-<button class="secondary" id="fetchBtn" onclick="fetchWeakness()">Fetch</button>
-<button disabled onclick="buttonClicked()">Choose File</button>
 
-<ol id="list">
-    <li>List Item 1</li>
-    <li>List Item 2</li>
-    <li>List Item 3</li>
-    <li>List Item 4</li>
-    <li>List Item 5</li>
-    <li>List Item 7</li>
-</ol>
+<section class="statistics-container">
+    <ol id="statistics" class="statistics"></ol>
+</section>
 
-<button class="secondary" id="fetchAllVulnBtn" onClick="fetchAllVulnerabilities()">Vulnerabilities</button>
-
+<section>
+    <ol id="list"></ol>
+</section>
 </body>
 
 </html>

@@ -1,8 +1,8 @@
-<img src="src/main/resources/logos/logo_background_white.png" width="256">
+<img src="src/main/resources/logos/macbook_dock_icon_1024x1024.png" width="256">
 
-# SAST Assessment and Gathering Engine (SAGE)
+# CodeBoy
 
-SAGE is a simple JSON parser especially designed for **Static Application Security Testing** (SAST) report files.
+**CodeBoy** is a simple JSON parser especially designed for **Static Application Security Testing** (SAST) report files.
 It aims to make assessing your software security scans more comprehendable and efficient by providing a GUI to browse through your project's vulnerabilities.
 
 ## Installation
@@ -11,7 +11,7 @@ It aims to make assessing your software security scans more comprehendable and e
 
 ## Usage
 
-SAGE does not scan your codebase for security issues itself. It is a tool that processes pre-generated SAST scan report files. It parses the vulnerabilities and their weaknesses from the report and loads them into an embedded
+CodeBoy does not scan your codebase for security issues itself. It is a tool that processes pre-generated SAST scan report files. It parses the vulnerabilities and their weaknesses from the report and loads them into an embedded
 database for easier analysis.
 
 An example sast report file can be found [here](gl-sast-report.json).
@@ -41,7 +41,7 @@ To contribute:
 ### Guidelines
 
 - Align your contributions with the project's goals and scope.
-- Ensure your code adheres to Javas coding standards.
+- Ensure your code adheres to Javas coding standards and best practices.
 - This application aims to be as slim as possible without trying to reinvent the wheel. Thus, if you think the project could benefit from adding a new library open a new issue for it before just adding new dependencies.
  
 ## License
