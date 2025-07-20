@@ -1,16 +1,11 @@
-name: Java CI
-
+name: Maven Build
 on:
   push:
-    branches: 
-      - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   build: 
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -20,6 +15,7 @@ jobs:
       with: 
         distribution: adopt
         java-version: 21
+        cache: maven
 
-    - name: Run tests
-      run: mvn test
+    - name: Build
+      run: mvn -B package --file pom.xml
