@@ -1,5 +1,6 @@
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/Main.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/FileController.java
+/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/ViewController.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/VulnerabilityController.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/WeaknessController.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/Dao.java
@@ -7,11 +8,6 @@
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/VulnerabilityDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/WeaknessDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dto/VulnerabilityDto.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/Category.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/Location.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/Severity.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/Type.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/Vulnerability.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/VulnerabilityModel.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/weakness/WeaknessDto.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/weakness/WeaknessModel.java

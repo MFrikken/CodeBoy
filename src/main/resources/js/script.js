@@ -8,6 +8,7 @@ function handleFileProcessing() {
     handleFileSelection(filePath);
     addToRecentFiles(filePath);
     loadRecentFiles();
+    goTo('analytics.html')
 }
 
 function handleFileSelection(filePath) {
@@ -133,5 +134,9 @@ function loadRecentFiles() {
             list.appendChild(li);
         });
     }
+}
+
+function goTo(path) {
+    window.location.href = path;
 }
 

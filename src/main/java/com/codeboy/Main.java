@@ -1,6 +1,7 @@
 package com.codeboy;
 
 import com.codeboy.controller.FileController;
+import com.codeboy.controller.ViewController;
 import com.codeboy.controller.VulnerabilityController;
 import com.codeboy.controller.WeaknessController;
 import com.codeboy.utility.FileReaderUtility;
@@ -30,32 +31,12 @@ public class Main extends Application {
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
 
+        ViewController viewController = new ViewController(webEngine);
+
         webEngine.setOnError(event -> LOGGER.warning("[Frontend] An error occured on the frontend: " + event.getMessage()));
         File htmlFile = new File(getClass().getResource("/html/index.html").getFile());
         webEngine.load(htmlFile.toURI().toString());
         webEngine.setJavaScriptEnabled(true);
-
-        // Wait until WebView is fully loaded before injecting WeaknessController
-        webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-            if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
-                JSObject window = (JSObject) webEngine.executeScript("window");
-                window.setMember("fileController", FileController.getInstance());
-                window.setMember("weaknessController", WeaknessController.getInstance());
-                window.setMember("vulnerabilityController", VulnerabilityController.getInstance());
-                window.setMember("fileReader", FileReaderUtility.getInstance());
-
-                // TODO: remove later - just for debugging purposes
-                window.setMember("javascriptBridge", new JavaScriptBridge());
-                webEngine.executeScript("""
-                            console.log = function(msg) {
-                                javascriptBridge.log(msg);
-                            };
-                            console.error = function(msg) {
-                                javascriptBridge.error(msg);
-                            };
-                        """);
-            }
-        });
 
         StackPane root = new StackPane(webView);
         Scene scene = new Scene(root, 1500, 900);
@@ -74,4 +55,6 @@ public class Main extends Application {
         }
         stage.show();
     }
+
+
 }
