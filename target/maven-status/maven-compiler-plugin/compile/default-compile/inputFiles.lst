@@ -4,7 +4,6 @@
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/VulnerabilityController.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/controller/WeaknessController.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/Dao.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/DatabaseManager.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/VulnerabilityDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/WeaknessDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dto/VulnerabilityDto.java

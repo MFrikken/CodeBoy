@@ -1,6 +1,9 @@
+com/codeboy/dto/WeaknessDto.class
 com/codeboy/utility/JavaScriptBridge.class
 com/codeboy/utility/JsonParser.class
+com/codeboy/dao/Dao.class
 com/codeboy/dto/VulnerabilityDto.class
+com/codeboy/utility/FileReaderUtility.class
 com/codeboy/controller/VulnerabilityController.class
 com/codeboy/model/weakness/WeaknessModel.class
 com/codeboy/Main.class
@@ -10,14 +13,10 @@ com/codeboy/repository/Repository.class
 com/codeboy/controller/ViewController.class
 com/codeboy/utility/JPAManager.class
 com/codeboy/controller/WeaknessController.class
-com/codeboy/dao/DatabaseManager.class
-com/codeboy/repository/VulnerabilityRepository.class
-com/codeboy/dto/WeaknessDto.class
-com/codeboy/dao/Dao.class
-com/codeboy/utility/FileReaderUtility.class
 com/codeboy/dao/VulnerabilityDao.class
 com/codeboy/service/FileService.class
 com/codeboy/dao/WeaknessDao.class
 com/codeboy/controller/FileController.class
 com/codeboy/model/vulnerability/VulnerabilityModel.class
+com/codeboy/repository/VulnerabilityRepository.class
 com/codeboy/service/WeaknessService.class
