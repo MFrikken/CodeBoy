@@ -1,6 +1,7 @@
-package com.codeboy.model.weakness;
+package com.codeboy.dto;
 
 import com.codeboy.model.vulnerability.VulnerabilityModel;
+import com.codeboy.model.weakness.WeaknessModel;
 import com.codeboy.utility.JsonParser;
 
 /**

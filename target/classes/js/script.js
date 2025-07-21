@@ -1,3 +1,7 @@
+/* ============================== */
+/*        UI Controls             */
+/* ============================== */
+
 function handleFileProcessing() {
     if (!window.fileController || !window.fileReader) {
         console.error("Java Bridge not ready yet.");
@@ -5,7 +9,7 @@ function handleFileProcessing() {
     let filePath = window.fileReader.getFilePath();
     if (!filePath) return;
 
-    handleFileSelection(filePath);
+    processFile(filePath);
     addToRecentFiles(filePath);
     loadRecentFiles();
     goTo('analytics.html')
@@ -14,16 +18,39 @@ function handleFileProcessing() {
 function handleFileSelection(filePath) {
     try {
         const result = processFile(filePath);
-        displayStatistics(result);
+        // displayStatistics(result);
     } catch (error) {
         console.error(error);
     }
 }
 
-function processFile(filePath) {
-    const result = window.fileController.process(filePath);
-    return JSON.parse(result);
+function displayStatistics(statistics) {
+    let statisticsList = document.getElementById("statistics");
+    statisticsList.innerHTML = "";
+    Object.entries(statistics).forEach(([key, value]) => {
+        let li = document.createElement("li");
+        li.textContent = `${key}: ${value}`
+        statisticsList.appendChild(li);
+    });
 }
+
+function displayVulnerabilities(vulnerabilities) {
+    let entityList = document.getElementById("vulnerability-list");
+    entityList.innerHTML = "";
+    vulnerabilities.forEach(entity => {
+        let li = document.createElement("li");
+        li.textContent = entity.name;
+        entityList.appendChild(li);
+    });
+}
+
+function goTo(path) {
+    window.location.href = path;
+}
+
+/* ============================== */
+/*        Sidebar                 */
+/* ============================== */
 
 function addToRecentFiles(filePath) {
     if (typeof filePath !== "string" || !filePath.trim()) {
@@ -44,39 +71,6 @@ function addToRecentFiles(filePath) {
     recentFiles = recentFiles.slice(0, 5);
 
     localStorage.setItem("recentFiles", JSON.stringify(recentFiles));
-}
-
-
-function displayStatistics(statistics) {
-    let statisticsList = document.getElementById("statistics");
-    statisticsList.innerHTML = "";
-    Object.entries(statistics).forEach(([key, value]) => {
-        let li = document.createElement("li");
-        li.textContent = `${key}: ${value}`
-        statisticsList.appendChild(li);
-    });
-}
-
-function fetchAllVulnerabilities() {
-    const vulnerabilities = JSON.parse(window.fileController.fetchAllVulnerabilities());
-    updateList(vulnerabilities);
-}
-
-function updateList(entities) {
-    console.log(entities);
-    let entityList = document.getElementById("list");
-    entityList.innerHTML = "";
-    entities.forEach(entity => {
-        let li = document.createElement("li");
-        li.textContent = `${entity.name}`;
-        entityList.appendChild(li);
-    });
-}
-
-function fetchWeakness(id) {
-    let list = document.getElementById("weaknessList");
-    const weakness = JSON.parse(window.weaknessController.fetchById(id));
-    // TODO: implement
 }
 
 function toggleSidebar() {
@@ -136,7 +130,27 @@ function loadRecentFiles() {
     }
 }
 
-function goTo(path) {
-    window.location.href = path;
+/* ============================== */
+/*        Data Management         */
+/* ============================== */
+
+function processFile(filePath) {
+    const result = window.fileController.process(filePath);
+    return JSON.parse(result);
 }
 
+function fetchStatistics() {
+    const stats = JSON.parse(window.vulnerabilityController.fetchStatistics());
+    displayStatistics(stats);
+}
+
+function fetchAllVulnerabilities() {
+    const vulnerabilities = JSON.parse(window.vulnerabilityController.getAll());
+    displayVulnerabilities(vulnerabilities);
+}
+
+function fetchWeakness(id) {
+    let list = document.getElementById("weaknessList");
+    const weakness = JSON.parse(window.weaknessController.fetchById(id));
+    // TODO: implement
+}

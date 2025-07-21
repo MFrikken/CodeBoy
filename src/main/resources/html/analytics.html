@@ -1,10 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Analytics</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CodeBoy UI - Analytics</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+    <script src="../js/script.js" defer></script>
+    <script>
+        function waitForBridge(callback) {
+            const interval = setInterval(() => {
+                if (typeof window.vulnerabilityController !== "undefined") {
+                    clearInterval(interval);
+                    callback();
+                }
+            }, 50);
+        }
+
+        waitForBridge(() => {
+            fetchStatistics();
+            fetchAllVulnerabilities();
+        });
+    </script>
 </head>
+
 <body>
-  <h1>Test</h1>
+
+<aside id="sidebar" class="sidebar collapsed">
+    <div class="sidebar-content">
+        <div class="sidebar-top">
+            <h3>Recent Activity</h3>
+            <ul id="recent-files" class="recent-files"></ul>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch" onchange="toggleTheme()"/>
+                    <span class="slider"></span>
+                </label>
+                <span class="theme-label">Dark Mode</span>
+            </div>
+
+            <a href="#" class="sidebar-link">❓ Help</a>
+            <hr class="sidebar-separator"/>
+            <div class="copyright">© 2025 MFrikken</div>
+        </div>
+    </div>
+</aside>
+
+<button id="sidebar-show-button" class="sidebar-show" onclick="toggleSidebar()" hidden>
+    <img src="../icons/sidebar.png" alt="Toggle Sidebar Icon" width="24"/>
+</button>
+
+<section class="statistics-container">
+    <ol id="statistics" class="statistics"></ol>
+</section>
+
+<section class="vulnerability-container">
+    <ol id="vulnerability-list" class="vulnerability-list"></ol>
+</section>
+
 </body>
+
 </html>

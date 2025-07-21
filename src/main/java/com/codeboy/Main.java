@@ -1,11 +1,6 @@
 package com.codeboy;
 
-import com.codeboy.controller.FileController;
 import com.codeboy.controller.ViewController;
-import com.codeboy.controller.VulnerabilityController;
-import com.codeboy.controller.WeaknessController;
-import com.codeboy.utility.FileReaderUtility;
-import com.codeboy.utility.JavaScriptBridge;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -13,7 +8,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
 
 import java.awt.*;
 import java.io.File;
@@ -30,18 +24,20 @@ public class Main extends Application {
     public void start(Stage stage) {
         WebView webView = new WebView();
         WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
 
-        ViewController viewController = new ViewController(webEngine);
+        new ViewController(webEngine);
 
         webEngine.setOnError(event -> LOGGER.warning("[Frontend] An error occured on the frontend: " + event.getMessage()));
+
         File htmlFile = new File(getClass().getResource("/html/index.html").getFile());
         webEngine.load(htmlFile.toURI().toString());
-        webEngine.setJavaScriptEnabled(true);
 
         StackPane root = new StackPane(webView);
         Scene scene = new Scene(root, 1500, 900);
         stage.setScene(scene);
         stage.setTitle("CodeBoy Desktop");
+
         if (Taskbar.isTaskbarSupported()) {
             Taskbar taskbar = Taskbar.getTaskbar();
 
@@ -55,6 +51,4 @@ public class Main extends Application {
         }
         stage.show();
     }
-
-
 }

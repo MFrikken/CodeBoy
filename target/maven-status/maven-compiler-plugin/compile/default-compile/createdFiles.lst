@@ -7,12 +7,12 @@ com/codeboy/Main.class
 com/codeboy/repository/WeaknessRepository.class
 com/codeboy/service/VulnerabilityService.class
 com/codeboy/repository/Repository.class
-com/codeboy/model/weakness/WeaknessDto.class
 com/codeboy/controller/ViewController.class
 com/codeboy/utility/JPAManager.class
 com/codeboy/controller/WeaknessController.class
 com/codeboy/dao/DatabaseManager.class
 com/codeboy/repository/VulnerabilityRepository.class
+com/codeboy/dto/WeaknessDto.class
 com/codeboy/dao/Dao.class
 com/codeboy/utility/FileReaderUtility.class
 com/codeboy/dao/VulnerabilityDao.class

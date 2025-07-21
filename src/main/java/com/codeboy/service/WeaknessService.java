@@ -3,7 +3,7 @@ package com.codeboy.service;
 import java.util.logging.Logger;
 
 import com.codeboy.model.vulnerability.VulnerabilityModel;
-import com.codeboy.model.weakness.WeaknessDto;
+import com.codeboy.dto.WeaknessDto;
 import com.codeboy.model.weakness.WeaknessModel;
 import com.codeboy.repository.WeaknessRepository;
 
@@ -20,7 +20,7 @@ public class WeaknessService {
         Integer idInt = Integer.parseInt(id);
         WeaknessModel model = weaknessRepository.getByID(idInt);
         if (model != null) {
-            WeaknessDto dto = model.toWeaknessDto();
+            WeaknessDto dto = model.toDto();
             return dto;
         }
 

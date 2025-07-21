@@ -94,7 +94,7 @@ public class WeaknessDao extends Dao<WeaknessModel, Integer> {
     public List<WeaknessModel> fetchAllByVulnerabilityId(Integer vulnerabilityId) {
         EntityManager entityManager = JPAManager.getEntityManager();
 
-        String query = "SELECT w FROM WeaknessModel WHERE w.vulnerability_id = :vulnerabilityId";
+        String query = "SELECT w FROM WeaknessModel w WHERE w.vulnerability.id = :vulnerabilityId";
 
         try {
             List<WeaknessModel> weaknessModels = entityManager.createQuery(query, WeaknessModel.class)

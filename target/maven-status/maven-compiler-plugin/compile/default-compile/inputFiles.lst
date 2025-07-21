@@ -8,8 +8,8 @@
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/VulnerabilityDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dao/WeaknessDao.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dto/VulnerabilityDto.java
+/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/dto/WeaknessDto.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/vulnerability/VulnerabilityModel.java
-/Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/weakness/WeaknessDto.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/model/weakness/WeaknessModel.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/repository/Repository.java
 /Users/mfrinken/IdeaProjects/CodeBoy-Java/src/main/java/com/codeboy/repository/VulnerabilityRepository.java

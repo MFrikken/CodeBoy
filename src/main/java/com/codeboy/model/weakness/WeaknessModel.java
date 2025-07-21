@@ -1,5 +1,6 @@
 package com.codeboy.model.weakness;
 
+import com.codeboy.dto.WeaknessDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.codeboy.model.vulnerability.VulnerabilityModel;
 import com.codeboy.utility.JsonParser;
@@ -48,7 +49,7 @@ public class WeaknessModel {
     public String getValue() { return value; }
     public String getUrl() { return url; }
 
-    public WeaknessDto toWeaknessDto() {
+    public WeaknessDto toDto() {
         return new WeaknessDto(type, name, value, url);
     }
 

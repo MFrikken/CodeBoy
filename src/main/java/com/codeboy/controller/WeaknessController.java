@@ -1,6 +1,6 @@
 package com.codeboy.controller;
 
-import com.codeboy.model.weakness.WeaknessDto;
+import com.codeboy.dto.WeaknessDto;
 import com.codeboy.service.WeaknessService;
 
 public class WeaknessController {
